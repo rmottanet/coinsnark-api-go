@@ -4,7 +4,7 @@
 
 This project showcases the Coin Snark API, a currency conversion service written in Go. It provides users with a seamless way to convert monetary values between different currencies. The API is part of a larger project, which also includes a frontend page hosted on GitHub Pages for easy access to its functionalities.
 
-While this README offers a brief overview, for a comprehensive understanding, please refer to the complete documentation.
+While this README offers a brief overview, for a comprehensive understanding, please refer to the complete [documentation](https://rmottanet.gitbook.io/coinsnark).
 
 
 ## Features
@@ -33,7 +33,7 @@ Convert Currency:
 curl "http://localhost:8000/api/convert?from=usd&to=brl&amount=42.75"
 ```
 
-For more detailed information about the endpoints and their functionalities, refer to the central API documentation.
+For more detailed information about the endpoints and their functionalities, refer to the central [API documentation](https://rmottanet.gitbook.io/coinsnark).
 
 > API keys from third-party services may be required for the correct functioning of certain API functionalities.
 
