@@ -16,11 +16,13 @@ RUN go mod download
 # Build the Go api
 RUN go build -o main ./api/cmd
 
-# Use env
-ENV PORT $PORT
+# Set up an environment variable with a default value.
+# This will be overridden by the environment variable from the panel if it's set.
+ENV PORT=8000
 
-# Expose port
-EXPOSE $PORT
+# Expose a default port. The actual PORT environment variable will be used at runtime to start the server.
+# Including EXPOSE instruction with a default port to satisfy the system requirements.
+EXPOSE 8000
 
 # Comando para executar sua aplicação quando o container for iniciado
 CMD ["./main"]
