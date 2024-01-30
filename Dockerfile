@@ -10,6 +10,9 @@ WORKDIR /api
 # Copy the source
 COPY . .
 
+# Download go modules
+RUN go mod download
+
 # Build the Go api
 RUN go build -o main ./api/cmd
 
