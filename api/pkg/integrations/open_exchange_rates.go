@@ -22,7 +22,7 @@ type OpenExchangeRatesResponse struct {
 
 
 func GetOpenExchangeRatesData(cache cache.Cache) (*OpenExchangeRatesResponse, error) {
-    apiKey, ok := config.EnvVars["OpenExchangeKey"]
+    apiKey, ok := config.EnvVars["OPENEXCHANGEKEY"]
     if !ok {
         return nil, fmt.Errorf("key 'OpenExchangeKey' not found in environment variables")
     }

@@ -20,7 +20,7 @@ type ExchangeRatesResponse struct {
 
 
 func GetExchangeRatesData(cache cache.Cache) (*ExchangeRatesResponse, error) {
-    apiKey, ok := config.EnvVars["ExchangeRatesKey"]
+    apiKey, ok := config.EnvVars["EXCHANGERATESKEY"]
     if !ok {
         return nil, fmt.Errorf("key 'ExchangeRatesKey' not found in environment variables")
     }

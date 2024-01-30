@@ -21,9 +21,9 @@ func main() {
 
 	config.LoadEnv()
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8000"
+	PORT := os.Getenv("PORT")
+	if PORT == "" {
+		PORT = "8000"
 	}
 
 	corsHandler := cors.New(cors.Options{
@@ -69,6 +69,6 @@ func main() {
         w.Write([]byte(welcomeHTML))
     })
     
-	log.Printf("Server started on port %s\n", port)
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Printf("Server started on port %s\n", PORT)
+	log.Fatal(http.ListenAndServe(":"+PORT, router))
 }

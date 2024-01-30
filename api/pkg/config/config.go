@@ -27,8 +27,8 @@ func LoadEnv() {
         log.Fatalf("Error loading .env file: %v", err)
     }
 
-    EnvVars["ExchangeRatesKey"] = os.Getenv("EXCHANGE_RATES_API_KEY")
-    EnvVars["FixerKey"] = os.Getenv("FIXER_API_KEY")
-    EnvVars["OpenExchangeKey"] = os.Getenv("OPEN_EXCHANGE_API_KEY")
-    EnvVars["port"] = os.Getenv("PORT")
+    EnvVars["EXCHANGERATESKEY"] = os.Getenv("EXCHANGE_RATES_API_KEY")
+    EnvVars["FIXERKEY"] = os.Getenv("FIXER_API_KEY")
+    EnvVars["OPENEXCHANGEKEY"] = os.Getenv("OPEN_EXCHANGE_API_KEY")
+    EnvVars["PORT"] = os.Getenv("PORT")
 }
