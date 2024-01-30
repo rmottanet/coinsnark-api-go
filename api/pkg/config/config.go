@@ -13,9 +13,18 @@ var EnvVars map[string]string
 func LoadEnv() {
     EnvVars = make(map[string]string)
 
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatal("Error uploading file .env")
+    // check .env
+    if _, err := os.Stat(".env"); err != nil {
+        if os.IsNotExist(err) {
+            log.Println("File .env not found, using environment variables from service")
+            return
+        }
+        log.Fatalf("Error checking .env file: %v", err)
+    }
+
+
+    if err := godotenv.Load(); err != nil {
+        log.Fatalf("Error loading .env file: %v", err)
     }
 
     EnvVars["ExchangeRatesKey"] = os.Getenv("EXCHANGE_RATES_API_KEY")
