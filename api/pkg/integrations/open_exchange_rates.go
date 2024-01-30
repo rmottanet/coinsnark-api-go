@@ -2,11 +2,12 @@ package integrations
 
 import (
     "fmt"
+    "os"
     "log"
     "net/url"
     "encoding/json"
 
-    "coinsnark/api/pkg/config"
+    //"coinsnark/api/pkg/config"
     "coinsnark/api/pkg/cache"
     "coinsnark/api/pkg/util"
 )
@@ -22,10 +23,15 @@ type OpenExchangeRatesResponse struct {
 
 
 func GetOpenExchangeRatesData(cache cache.Cache) (*OpenExchangeRatesResponse, error) {
-    apiKey, ok := config.EnvVars["OPEN_EXCHANGE_API_KEY"]
-    if !ok {
+	apiKey := os.Getenv("OPEN_EXCHANGE_API_KEY")
+    if apiKey == "" {
         return nil, fmt.Errorf("key 'Open Exchange Key' not found in environment variables")
     }
+    
+    //apiKey, ok := config.EnvVars["OPEN_EXCHANGE_API_KEY"]
+    //if !ok {
+        //return nil, fmt.Errorf("key 'Open Exchange Key' not found in environment variables")
+    //}
 
     apiURL := GetUrl("open_exchanges_rates")
 

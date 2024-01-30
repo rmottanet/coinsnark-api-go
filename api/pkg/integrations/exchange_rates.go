@@ -2,11 +2,12 @@ package integrations
 
 import (
     "fmt"
+    "os"
     "log"
     "net/url"
     "encoding/json"
 
-    "coinsnark/api/pkg/config"
+    //"coinsnark/api/pkg/config"
     "coinsnark/api/pkg/cache"
     "coinsnark/api/pkg/util"
 )
@@ -20,8 +21,8 @@ type ExchangeRatesResponse struct {
 
 
 func GetExchangeRatesData(cache cache.Cache) (*ExchangeRatesResponse, error) {
-    apiKey, ok := config.EnvVars["EXCHANGE_RATES_API_KEY"]
-    if !ok {
+    apiKey := os.Getenv("EXCHANGE_RATES_API_KEY")
+    if apiKey == "" {
         return nil, fmt.Errorf("key 'Exchange Rates Key' not found in environment variables")
     }
 
