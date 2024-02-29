@@ -1,13 +1,14 @@
 package controllers
 
 import (
-    "encoding/json"
-    "net/http"
-    "strconv"
     "strings"
+    "strconv"
+    "net/http"
+	"time"
+    "encoding/json"
 
-    "coinsnark/api/pkg/models"
     "coinsnark/api/pkg/services"
+    "coinsnark/api/pkg/models"
 )
 
 
@@ -36,13 +37,13 @@ func (convertCtrl *ConversionController) ConvertCurrency(w http.ResponseWriter, 
         return
     }
 
-    convertedAmount, cacheTimestamp, err := convertCtrl.Service.Convert(from, to, amount)
+    convertedAmount, err := convertCtrl.Service.Convert(from, to, amount)
     if err != nil {
-        http.Error(w, "Conversion error", http.StatusInternalServerError)
+        http.Error(w, "Erro ao realizar a conversão", http.StatusInternalServerError)
         return
     }
 
-    response := models.NewConversionResponse(from, to, convertedAmount, cacheTimestamp)
+    response := models.NewConversionResponse(convertedAmount, time.Now())
 
     jsonResponse, err := json.Marshal(response)
     if err != nil {
@@ -51,8 +52,6 @@ func (convertCtrl *ConversionController) ConvertCurrency(w http.ResponseWriter, 
     }
 
     w.Header().Set("Content-Type", "application/json")
-
     w.WriteHeader(http.StatusOK)
-
     w.Write(jsonResponse)
 }
