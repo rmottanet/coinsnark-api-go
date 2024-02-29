@@ -8,30 +8,26 @@ import (
 )
 
 func TestNewConversionResponse(t *testing.T) {
-    // Definir valores de exemplo
-    from := "USD"
-    to := "EUR"
-    convertedAmount := 0.85
+
+    conversion := map[string]string{
+        "USD": "0.85",
+        "EUR": "1.00",
+    }
     cacheUpdated := time.Now()
 
-    // Criar uma nova instância de ConversionResponse
-    response := models.NewConversionResponse(from, to, convertedAmount, cacheUpdated)
+    response := models.NewConversionResponse(conversion, cacheUpdated)
 
-    // Verificar se os valores foram definidos corretamente na instância
     if response.API != "CoinSnark" {
         t.Errorf("API não definida corretamente: esperava 'CoinSnark', obteve '%s'", response.API)
     }
-    if response.From != from {
-        t.Errorf("Valor 'From' não definido corretamente: esperava '%s', obteve '%s'", from, response.From)
+    if response.Conversion["USD"] != "0.85" {
+        t.Errorf("Valor de conversão 'USD' não definido corretamente: esperava '0.85', obteve '%s'", response.Conversion["USD"])
     }
-    if response.To != to {
-        t.Errorf("Valor 'To' não definido corretamente: esperava '%s', obteve '%s'", to, response.To)
+    if response.Conversion["EUR"] != "1.00" {
+        t.Errorf("Valor de conversão 'EUR' não definido corretamente: esperava '1.00', obteve '%s'", response.Conversion["EUR"])
     }
-    if response.Converted != "0.85" { // O valor 0.85 formatado com duas casas decimais
-        t.Errorf("Valor 'Converted' não definido corretamente: esperava '0.8500', obteve '%s'", response.Converted)
+    if response.Timestamp != cacheUpdated.Format(time.RFC3339) {
+        t.Errorf("Valor 'Timestamp' não definido corretamente: esperava '%s', obteve '%s'", cacheUpdated.Format(time.RFC3339), response.Timestamp)
     }
-    if response.CacheUpdated != cacheUpdated.Format(time.RFC3339) {
-        t.Errorf("Valor 'CacheUpdated' não definido corretamente: esperava '%s', obteve '%s'", cacheUpdated.Format(time.RFC3339), response.CacheUpdated)
-    }
-    // Você pode verificar outros campos conforme necessário
+
 }
