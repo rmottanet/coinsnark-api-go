@@ -1,9 +1,9 @@
 package controllers
 
 import (
+    "net/http"
     "time"
     "encoding/json"
-    "net/http"
 
     "coinsnark/api/pkg/models"
     "coinsnark/api/pkg/services"
@@ -40,8 +40,6 @@ func (currencyCtrl *CurrencyController) GetCurrencyNames(w http.ResponseWriter, 
     }
 
     w.Header().Set("Content-Type", "application/json")
-    
-    w.WriteHeader(http.StatusOK)
-    
+    w.WriteHeader(http.StatusOK)   
     w.Write(jsonResponse)
 }
