@@ -16,27 +16,31 @@ func TestConversionService_Convert(t *testing.T) {
 
 	convertSrvc := services.NewConversionService(c)
 
-	convertedAmount, timestamp, err := convertSrvc.Convert("USD", "EUR", 100.0)
+	response, err := convertSrvc.Convert("USD", "EUR", 100.0)
 	if err != nil {
-		t.Errorf("Unexpected error during conversion: %v", err)
+		t.Errorf("Erro inesperado durante a conversão: %v", err)
 	}
 
-	expectedAmount := 100.0 * (0.85 / 1.0)
-	if convertedAmount != expectedAmount {
-		t.Errorf("Incorrect converted value. Expected: %f, Obtained: %f", expectedAmount, convertedAmount)
+	expectedAmount := "85.00"
+	if response["converted"] != expectedAmount {
+		t.Errorf("Valor convertido incorreto. Esperado: %s, Obtido: %s", expectedAmount, response["converted"])
 	}
 
-	if timestamp.IsZero() {
-		t.Error("Cache timestamp must not be zero")
+	cacheUpdated, err := time.Parse(time.RFC3339, response["cache_updated"])
+	if err != nil {
+		t.Errorf("Erro ao analisar o timestamp do cache: %v", err)
+	}
+	if cacheUpdated.IsZero() {
+		t.Error("O timestamp do cache não deve ser zero")
 	}
 
-	_, _, err = convertSrvc.Convert("JPY", "EUR", 100.0)
+	_, err = convertSrvc.Convert("JPY", "EUR", 100.0)
 	if err == nil {
-		t.Error("An error was expected when converting from a currency not found")
+		t.Error("Esperava-se um erro ao converter de uma moeda não encontrada")
 	}
 
-	_, _, err = convertSrvc.Convert("USD", "JPY", 100.0)
+	_, err = convertSrvc.Convert("USD", "JPY", 100.0)
 	if err == nil {
-		t.Error("An error was expected when converting from a currency not found")
+		t.Error("Esperava-se um erro ao converter para uma moeda não encontrada")
 	}
 }

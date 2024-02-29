@@ -1,6 +1,7 @@
 package services
 
 import (
+	"strconv"
     "time"
     "errors"
 
@@ -9,7 +10,7 @@ import (
 
 
 type ConversionServiceInterface interface {
-    Convert(from, to string, amount float64) (float64, time.Time, error)
+    Convert(from, to string, amount float64) (map[string]string, error)
 }
 
 
@@ -25,13 +26,13 @@ func NewConversionService(cache cache.Cache) *ConversionService {
 }
 
 // Convert converts the specified amount from one currency to another.
-func (convertSrvc *ConversionService) Convert(from, to string, amount float64) (float64, time.Time, error) {
+func (convertSrvc *ConversionService) Convert(from, to string, amount float64) (map[string]string, error) {
 
     rateFrom, okFrom := convertSrvc.Cache.Get(from)
     rateTo, okTo := convertSrvc.Cache.Get(to)
 
     if !okFrom || !okTo {
-        return 0, time.Time{}, errors.New("Exchange rates not found in the cache")
+        return nil, errors.New("Exchange rates not found in the cache")
     }
 
     exchangeRate := rateTo / rateFrom
@@ -40,5 +41,11 @@ func (convertSrvc *ConversionService) Convert(from, to string, amount float64) (
 
     cacheTimestamp := convertSrvc.Cache.GetTimestamp()
 
-    return convertedAmount, cacheTimestamp, nil
+    response := make(map[string]string)
+    response["from"] = from
+    response["to"] = to
+    response["converted"] = strconv.FormatFloat(convertedAmount, 'f', 2, 64)
+    response["cache_updated"] = cacheTimestamp.Format(time.RFC3339)
+
+    return response, nil
 }
