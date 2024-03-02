@@ -5,14 +5,16 @@ func WelcomePageHTML() string {
 		<!DOCTYPE html>
 		<html lang="en">
 			<head>
-			    <meta charset="UTF-8">
-			    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-			    <title>Coin Snark</title>
+				<meta charset="UTF-8">
+				<title>CoinSnark</title>
 			</head>
-		    <body>
-		        <h1>Welcome to the Coin Snark API</h1>
-		        <p>Thank you for visiting CoinSnark! For more information, see the <a href="https://rmottanet.gitbook.io/coinsnark">documentation</a>.</p>
-		    </body>
+			<body>
+				<h1>CoinSnark Go API</h1>
+				<ul>
+					<li><a href="https://rmottanet.github.io/coinsnark">Frontend</a></li>
+					<li><a href="https://rmottanet.gitbook.io/coinsnark">Documentation</a></li>
+				</ul>
+			</body>
 		</html>
     `
 }
