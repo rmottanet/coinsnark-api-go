@@ -5,7 +5,7 @@ FROM golang:latest
 LABEL maintainer="Rodrigo Motta rmotta.net@gmail.com"
 
 # Set the Current Working Directory
-WORKDIR /api
+WORKDIR /
 
 # Copy the source
 COPY . .
