@@ -17,9 +17,10 @@ RUN go mod download
 RUN go build -o main ./api/cmd
 
 # Expose the port based on the environment variable
-ARG PORT=8000
-ENV PORT=${PORT}
-EXPOSE ${PORT}
+#ARG PORT=8000
+#ENV PORT=${PORT}
+#EXPOSE ${PORT}
+PORT=8080
 
-# Comando para executar sua aplicação quando o container for iniciado
+# 
 CMD ["./main"]
