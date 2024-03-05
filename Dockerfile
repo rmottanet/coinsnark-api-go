@@ -20,7 +20,7 @@ RUN go build -o main ./api/cmd
 #ARG PORT=8000
 #ENV PORT=${PORT}
 #EXPOSE ${PORT}
-PORT=8080
+EXPOSE 8080
 
 # 
 CMD ["./main"]

@@ -1,0 +1,21 @@
+name: Pipeline
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Tests
+        uses: ./.github/workflows/test.yml
+
+      - name: Push Docker
+        if: ${{ success() }}
+        uses: ./.github/workflows/registre.yml
