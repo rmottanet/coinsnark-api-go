@@ -4,6 +4,7 @@ import (
     "net/http"
     
     "coinsnark/api/pkg/util"
+    "coinsnark/api/pkg/models"
 )
 
 
@@ -15,7 +16,8 @@ func ValidateInput(next http.Handler) http.Handler {
         amount := r.URL.Query().Get("amount")
 
         if !util.ValidateCurrencyCode(from) || !util.ValidateCurrencyCode(to) || !util.ValidateAmount(amount) {
-            http.Error(w, "Invalid input data", http.StatusBadRequest)
+            errorResponse := models.NewErrorResponse("Dados de entrada inválidos", http.StatusBadRequest)
+            util.WriteErrorResponse(w, errorResponse)
             return
         }
 
