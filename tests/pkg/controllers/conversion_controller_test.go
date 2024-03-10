@@ -67,5 +67,3 @@ func TestConvertCurrency(t *testing.T) {
 		t.Error("Campo 'cache_updated' na conversão está ausente")
 	}
 }
-
-

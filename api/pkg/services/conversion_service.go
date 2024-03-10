@@ -30,7 +30,6 @@ func (convertSrvc *ConversionService) Convert(from, to string, amount float64) (
 
     rateFrom, okFrom := convertSrvc.Cache.Get(from)
     rateTo, okTo := convertSrvc.Cache.Get(to)
-
     if !okFrom || !okTo {
         return nil, errors.New("Exchange rates not found in the cache")
     }

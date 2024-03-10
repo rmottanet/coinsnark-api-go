@@ -1,26 +1,26 @@
 package controllers
 
 import (
+    "net/http"
     "strings"
     "strconv"
-    "net/http"
 	"time"
     "encoding/json"
 
-    "coinsnark/api/pkg/services"
-    "coinsnark/api/pkg/models"
+	"coinsnark/api/pkg/services"
+	"coinsnark/api/pkg/models"
 )
 
 
 type ConversionController struct {
-    Service services.ConversionServiceInterface
+	Service services.ConversionServiceInterface
 }
 
 
 func NewConversionController(service services.ConversionServiceInterface) *ConversionController {
-    return &ConversionController{
-        Service: service,
-    }
+	return &ConversionController{
+		Service: service,
+	}
 }
 
 
@@ -33,13 +33,23 @@ func (convertCtrl *ConversionController) ConvertCurrency(w http.ResponseWriter, 
 
     amount, err := strconv.ParseFloat(amountStr, 64)
     if err != nil {
-        http.Error(w, "Error converting amount value", http.StatusBadRequest)
+        // Invalid request error (400)
+        errorResponse := models.NewErrorResponse("Error converting amount value", http.StatusBadRequest)
+        jsonResponse, _ := json.Marshal(errorResponse)
+        w.WriteHeader(http.StatusBadRequest)
+        w.Header().Set("Content-Type", "application/json")
+        w.Write(jsonResponse)
         return
     }
 
     convertedAmount, err := convertCtrl.Service.Convert(from, to, amount)
     if err != nil {
-        http.Error(w, "Erro ao realizar a conversão", http.StatusInternalServerError)
+        // Internal server error (500)
+        errorResponse := models.NewErrorResponse("Error converting.", http.StatusInternalServerError)
+        jsonResponse, _ := json.Marshal(errorResponse)
+        w.WriteHeader(http.StatusInternalServerError)
+        w.Header().Set("Content-Type", "application/json")
+        w.Write(jsonResponse)
         return
     }
 
@@ -47,7 +57,12 @@ func (convertCtrl *ConversionController) ConvertCurrency(w http.ResponseWriter, 
 
     jsonResponse, err := json.Marshal(response)
     if err != nil {
-        http.Error(w, "Error formatting response", http.StatusInternalServerError)
+        // Internal server error (500)
+        errorResponse := models.NewErrorResponse("Error formatting response", http.StatusInternalServerError)
+        jsonResponse, _ = json.Marshal(errorResponse)
+        w.WriteHeader(http.StatusInternalServerError)
+        w.Header().Set("Content-Type", "application/json")
+        w.Write(jsonResponse)
         return
     }
 
