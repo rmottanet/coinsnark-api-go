@@ -26,8 +26,18 @@ jobs:
 
       - name: Executar testes
         run: go test ./...
+        continue-on-error: false
 
-      - name: Login no Docker Hub
+      - name: Checkout tests
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "Tests ok. Build and push docker image."
+          else
+            echo "Tests Fail. Cancel build and push docker image."
+            exit 1
+          fi
+
+      - name: Docker Hub login
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -35,5 +45,5 @@ jobs:
 
       - name: Build e Push da Imagem Docker
         run: |
-          docker build -t rmottanet/coinsnark:latest .
-          docker push rmottanet/coinsnark:latest
+          docker build -t rmottanet/coinsnark:go-latest .
+          docker push rmottanet/coinsnark:go-latest
