@@ -42,15 +42,22 @@ func main() {
 	currencyService := services.NewCurrencyService(exchangeRatesCache)
 	conversionService := services.NewConversionService(exchangeRatesCache)
 
+    apiController := controllers.NewApiController()  
 	currencyController := controllers.NewCurrencyController(currencyService)
 	conversionController := controllers.NewConversionController(conversionService)
-	
 
+  
+    router.HandleFunc("/api", apiController.ApiInfo).Methods("GET")
+    
 	router.HandleFunc("/api/currency", currencyController.GetCurrencyNames).Methods("GET")
 
     router.Handle("/api/convert", middleware.ValidateInput(middleware.ConvertHandler(conversionController.ConvertCurrency)))
 
 
+	if _, err := integrations.GetBCBQuotesData(exchangeRatesCache); err != nil {
+		log.Fatalf("Erro ao obter dados das taxas de câmbio: %v", err)
+	}
+	
 	if _, err := integrations.GetOpenExchangeRatesData(exchangeRatesCache); err != nil {
 		log.Fatalf("Error retrieving exchange rate data: %v", err)
 	}
