@@ -22,7 +22,7 @@ func NewCurrencyResponse(currencies map[string]string, timestamp time.Time) *Cur
         APIDocumentation: "https://rmottanet.gitbook.io/coinsnark",
         Currencies:       currencies,
         License:          "https://raw.githubusercontent.com/rmottanet/coinsnark-api-go/main/LICENSE",
-        TermsOfUse:       "https://rmottanet.gitbook.io/coinsnark/coin-snark/coin-snak-api-terms-of-use",
+        TermsOfUse:       "https://rmottanet.gitbook.io/coinsnark/coin-snark/coin-snark-api-terms-of-use",
         Timestamp:        timestamp.Format(time.RFC3339),
     }
 }
