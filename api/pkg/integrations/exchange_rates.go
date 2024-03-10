@@ -7,7 +7,6 @@ import (
     "net/url"
     "encoding/json"
 
-    //"coinsnark/api/pkg/config"
     "coinsnark/api/pkg/cache"
     "coinsnark/api/pkg/util"
 )
