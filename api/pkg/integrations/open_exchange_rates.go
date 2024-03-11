@@ -7,7 +7,6 @@ import (
     "net/url"
     "encoding/json"
 
-    //"coinsnark/api/pkg/config"
     "coinsnark/api/pkg/cache"
     "coinsnark/api/pkg/util"
 )
@@ -27,11 +26,6 @@ func GetOpenExchangeRatesData(cache cache.Cache) (*OpenExchangeRatesResponse, er
     if apiKey == "" {
         return nil, fmt.Errorf("key 'Open Exchange Key' not found in environment variables")
     }
-    
-    //apiKey, ok := config.EnvVars["OPEN_EXCHANGE_API_KEY"]
-    //if !ok {
-        //return nil, fmt.Errorf("key 'Open Exchange Key' not found in environment variables")
-    //}
 
     apiURL := GetUrl("open_exchanges_rates")
 

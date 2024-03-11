@@ -41,22 +41,17 @@ func TestValidateInput_ValidInput(t *testing.T) {
 }
 
 func TestValidateInput_InvalidInput(t *testing.T) {
-    // Crie um request HTTP falsificado com dados de entrada inválidos
+
     req := httptest.NewRequest("GET", "/convert?from=USDD&to=EUR&amount=abc", nil)
 
-    // Crie um gravador de resposta falsificado para capturar a resposta
     recorder := httptest.NewRecorder()
 
-    // Crie um manipulador fictício para passar para o middleware de validação
     mockHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {})
 
-    // Crie um middleware de validação usando a função ValidateInput
     validationMiddleware := middleware.ValidateInput(mockHandler)
 
-    // Execute a solicitação HTTP falsificada usando o middleware de validação
     validationMiddleware.ServeHTTP(recorder, req)
 
-    // Verifique se a resposta está correta
     if status := recorder.Code; status != http.StatusBadRequest {
         t.Errorf("Handler retornou status incorreto: obteve %v queria %v",
             status, http.StatusBadRequest)

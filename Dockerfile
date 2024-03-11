@@ -17,10 +17,10 @@ RUN go mod download
 RUN go build -o main ./api/cmd
 
 # Expose the port based on the environment variable
-#ARG PORT=8000
-#ENV PORT=${PORT}
-#EXPOSE ${PORT}
-EXPOSE 8080
+ARG PORT=8000
+ENV PORT=${PORT}
+EXPOSE ${PORT}
+#EXPOSE 8080
 
 # 
 CMD ["./main"]
